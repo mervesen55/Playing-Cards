@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using DG.Tweening;
+
 
 public class Card : MonoBehaviour
 {
@@ -7,18 +9,42 @@ public class Card : MonoBehaviour
 
     private int cardValue;
     private int number;
+    
 
     private bool numberCard;
+    private bool played;
+
 
     public string CardName
     {
         get { return cardName; }
         set { cardName = value; }
     }
+
+    public bool Played
+    {
+        get { return played; }
+        set { played = value; }
+    }
+
     private void Awake()
     {
         Invoke(nameof(SetNumber), 0.1f);     
         Invoke(nameof(SetSprite), 0.1f);     
+    }
+
+    private void OnMouseDown()
+    {
+        Vector2 targetPosition = (GameManager.Instance.PlayingArea.transform.position) + (UnityEngine.Random.Range(-0.5f,0.5f)*Vector3.right);
+        float time = Vector2.Distance(targetPosition, transform.position)*0.1f;
+
+        transform.DOMove(targetPosition, time);
+        int randomAngle = UnityEngine.Random.Range(-7, 7);
+        GetComponent<Renderer>().sortingOrder = GameManager.Instance.layerOrder;
+        GameManager.Instance.layerOrder++;
+
+        transform.DORotate(randomAngle * Vector3.forward, time);
+        Debug.Log("clicked");
     }
 
     private void SetSprite()
