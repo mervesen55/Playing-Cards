@@ -219,6 +219,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 749940814}
+        m_TargetAssemblyTypeName: TableCreator, Assembly-CSharp
+        m_MethodName: SetBets
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &217372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -762,7 +774,7 @@ GameObject:
   - component: {fileID: 180617775}
   - component: {fileID: 180617774}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Bet Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -808,7 +820,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Bet Range:2500-1000000
+  m_text: Bet Range:2.500-100.000
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1021,6 +1033,8 @@ MonoBehaviour:
   isMyTurn: 0
   WinCount: 0
   LostCount: 0
+  myCardPoints: []
+  cardsInMyHand: []
 --- !u!1 &252532846
 GameObject:
   m_ObjectHideFlags: 0
@@ -2507,7 +2521,7 @@ GameObject:
   - component: {fileID: 605431226}
   - component: {fileID: 605431225}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Bet Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2553,7 +2567,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Bet Range:50000-100000
+  m_text: Bet Range:50.000-1.000.000
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3150,6 +3164,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 749940814}
+        m_TargetAssemblyTypeName: TableCreator, Assembly-CSharp
+        m_MethodName: SetBets
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &691791111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3281,10 +3307,12 @@ MonoBehaviour:
   minBetText: {fileID: 642383921}
   maxBetText: {fileID: 1114773985}
   currentBetText: {fileID: 61114676}
-  minBet: 250
-  maxBet: 5000
   slider: {fileID: 1088863742}
   peopleNumber: 2
+  minMaxBetRanges:
+  - {x: 250, y: 5000}
+  - {x: 2500, y: 100000}
+  - {x: 50000, y: 1000000}
 --- !u!1 &753395456
 GameObject:
   m_ObjectHideFlags: 0
@@ -3658,6 +3686,8 @@ MonoBehaviour:
   isMyTurn: 0
   WinCount: 0
   LostCount: 0
+  myCardPoints: []
+  cardsInMyHand: []
 --- !u!1001 &822965567
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4501,7 +4531,7 @@ GameObject:
   - component: {fileID: 1049047992}
   - component: {fileID: 1049047991}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Headline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4928,9 +4958,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 749940810}
-        m_TargetAssemblyTypeName: CreateTable, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 749940814}
+        m_TargetAssemblyTypeName: TableCreator, Assembly-CSharp
+        m_MethodName: SetCurrentText
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5171,6 +5201,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 749940814}
+        m_TargetAssemblyTypeName: TableCreator, Assembly-CSharp
+        m_MethodName: SetBets
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1126879649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5300,7 +5342,7 @@ GameObject:
   - component: {fileID: 1161628045}
   - component: {fileID: 1161628044}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Headline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8172,6 +8214,7 @@ MonoBehaviour:
   isMyTurn: 0
   WinCount: 0
   LostCount: 0
+  myBet: 0
 --- !u!1 &1775598570
 GameObject:
   m_ObjectHideFlags: 0
@@ -8954,7 +8997,7 @@ GameObject:
   - component: {fileID: 1909785898}
   - component: {fileID: 1909785897}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Bet Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9000,7 +9043,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Bet Range:250-5000
+  m_text: Bet Range:250-5.000
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -9128,6 +9171,8 @@ MonoBehaviour:
   isMyTurn: 0
   WinCount: 0
   LostCount: 0
+  myCardPoints: []
+  cardsInMyHand: []
 --- !u!1 &1986060062
 GameObject:
   m_ObjectHideFlags: 0
@@ -9498,7 +9543,7 @@ GameObject:
   - component: {fileID: 2082592184}
   - component: {fileID: 2082592183}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Headline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

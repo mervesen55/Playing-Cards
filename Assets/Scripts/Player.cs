@@ -8,12 +8,11 @@ public class Player : MonoBehaviour
 
     public Transform[] cardPoints;
 
-    [HideInInspector]
-    public bool isMyTurn;
+    [HideInInspector] public bool isMyTurn;
 
     public int WinCount;
     public int LostCount;
-
+    public int myBet;
 
     private void Awake()
     {

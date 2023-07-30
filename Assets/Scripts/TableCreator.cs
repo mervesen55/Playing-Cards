@@ -11,25 +11,22 @@ public class TableCreator : MonoBehaviour
     [SerializeField] private TMP_Text maxBetText;
     [SerializeField] private TMP_Text currentBetText;
 
-    [SerializeField] private int minBet;
-    [SerializeField] private int maxBet;
-
     [SerializeField] private Slider slider;
 
-    [SerializeField]
-    private int peopleNumber=2;
+    [SerializeField] private int peopleNumber=2;
 
+    [SerializeField] Vector2[] minMaxBetRanges;
 
-    private void Start()
-    {
-        SetBetTexts();
-    }
+    private int minBet;
+    private int maxBet;
+    private int currentBet;
+
 
     public void SetCurrentText()
     {
-        int currentBet = minBet + (int)((maxBet - minBet) *(slider.value));
-        currentBetText.text = currentBet.ToString();
-        
+        currentBet = minBet + (int)((maxBet - minBet) *(slider.value));
+        Player.Instance.myBet = currentBet;
+        currentBetText.text = currentBet.ToString();       
     }
 
     public void SetNumberofPeople(int _peopleNumber)
@@ -43,8 +40,16 @@ public class TableCreator : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void SetBets(int minMaxRangeIndex)
+    {
+        minBet = (int)(minMaxBetRanges[minMaxRangeIndex].x);
+        maxBet = (int)minMaxBetRanges[minMaxRangeIndex].y;
+        currentBet = minBet;
+        SetBetTexts();
+    }
     private void SetBetTexts()
     {
+        slider.value = 0;
         minBetText.text = minBet.ToString();
         maxBetText.text = maxBet.ToString();
         currentBetText.text = minBet.ToString();
