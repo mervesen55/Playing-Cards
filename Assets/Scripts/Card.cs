@@ -6,7 +6,7 @@ using DG.Tweening;
 public class Card : MonoBehaviour
 {
     private string cardName;
-
+    [SerializeField]
     private char letter;
 
     private int cardValue;
@@ -20,7 +20,6 @@ public class Card : MonoBehaviour
     {
         get { return letter; }
         set { letter = value; }
-
     }
     public string CardName
     {
@@ -48,8 +47,14 @@ public class Card : MonoBehaviour
     {
         if (Played || !Player.Instance.isMyTurn) return;
         played = true;
-        Vector2 targetPosition = (GameManager.Instance.PlayingArea.transform.position) + (UnityEngine.Random.Range(-0.5f,0.5f)*Vector3.right);
-        float time = Vector2.Distance(targetPosition, transform.position)*0.1f;
+        MoveCard(Player.Instance.transform);
+    }
+
+
+    public void MoveCard(Transform player)
+    {
+        Vector2 targetPosition = (GameManager.Instance.PlayingArea.transform.position) + (UnityEngine.Random.Range(-0.5f, 0.5f) * Vector3.right);
+        float time = Vector2.Distance(targetPosition, transform.position) * 0.1f;
         transform.DOMove(targetPosition, time);
         int randomAngle = UnityEngine.Random.Range(-7, 7);
         GetComponent<Renderer>().sortingOrder = GameManager.Instance.layerOrder;
@@ -57,11 +62,26 @@ public class Card : MonoBehaviour
 
         transform.DORotate(randomAngle * Vector3.forward, time).OnComplete(() =>
         {
-            randomAngle += 2 * (randomAngle/Math.Abs(randomAngle));
-            transform.DORotate(Vector3.forward * randomAngle, 0.2f);
+            if (randomAngle == 0) randomAngle = 1;
+            randomAngle += 2 * (randomAngle / Math.Abs(randomAngle));
+            transform.DORotate(Vector3.forward * randomAngle, 0.2f).OnComplete(() =>
+            {
+                GameManager.Instance.PlayedCards.Add(transform);
+                //if (GameManager.Instance.LastCard != 0)
+                {
+                    if ((letter == GameManager.Instance.LastCard || isJack) && GameManager.Instance.PlayedCards.Count > 1)
+                    {
+                        GameManager.Instance.Snap(player.position);
+                    }
+                }
+
+                GameManager.Instance.LastCard = letter;
+                GameManager.Instance.SetPlayingOrder();
+            });
+          
+            
         });
     }
-
     private void SetSprite()
     {
         GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(cardName);
@@ -70,12 +90,16 @@ public class Card : MonoBehaviour
     private void SetNumber()
     {
         char firstChar = cardName[0];
-        Debug.Log("first char: " + firstChar);
-        Debug.Log("first char is digit: " + Char.IsDigit(firstChar));
         if (Char.IsDigit(firstChar))
         {
             numberCard = true;
             number = (int)firstChar;
+        }
+        //else
+        {
+            letter = firstChar;
+            char J = "J".ToCharArray()[0];
+            if(firstChar == J) IsJack = true;
         }
 
         SetValue();

@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
 
     public Transform[] cardPoints;
 
+    public GameObject myPointer;
+
     [HideInInspector] public bool isMyTurn;
 
     public int WinCount;
@@ -18,4 +20,5 @@ public class Player : MonoBehaviour
     {
         Instance = this; 
     }
+   
 }

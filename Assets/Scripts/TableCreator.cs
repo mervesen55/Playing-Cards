@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class TableCreator : MonoBehaviour
 {
+    public static TableCreator Instance;
 
     [SerializeField] private TMP_Text minBetText;
     [SerializeField] private TMP_Text maxBetText;
@@ -21,7 +22,16 @@ public class TableCreator : MonoBehaviour
     private int maxBet;
     private int currentBet;
 
+    public int PeopleNumber
+    {
+        get { return peopleNumber; }
+        set { peopleNumber = value; }
+    }
 
+    private void Awake()
+    {
+        Instance = this;
+    }
     public void SetCurrentText()
     {
         currentBet = minBet + (int)((maxBet - minBet) *(slider.value));
