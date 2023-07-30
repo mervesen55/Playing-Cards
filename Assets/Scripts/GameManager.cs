@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public char LastCard;
     public string CurrentCard;
 
+    public bool RoundSetted;
+
     public List<Transform> Players = new List<Transform>();
     public List<Transform> PlayedCards = new List<Transform>();
 
@@ -24,6 +26,8 @@ public class GameManager : MonoBehaviour
     public GameObject PlayerPoint;
     public GameObject roomsPanel;
     public GameObject optionsPanel;
+    public GameObject fakeInitialCards;
+
 
     public List<Transform> PlayingOrder = new List<Transform>();
 
@@ -98,13 +102,18 @@ public class GameManager : MonoBehaviour
 
     public void Snap(Vector2 callerPos)
     {
+        if(fakeInitialCards.activeSelf) fakeInitialCards.SetActive(false);
         foreach(Transform playedCard in PlayedCards)
         {
             Vector2 target = callerPos;
-            float time = Vector2.Distance(target, playedCard.transform.position)*0.1f;
-
+            float time = Vector2.Distance(target, playedCard.transform.position)*0.1f;            
             playedCard.DOMove(target, time);
         }
         PlayedCards.Clear();
+    }
+
+    private void DealInitialCards()
+    {
+        
     }
 }
