@@ -16,6 +16,9 @@ public class Player : MonoBehaviour
     public int LostCount;
     public int myBet;
 
+    public int gainedValue;
+    //snap olunca 10 puan ver to do
+
     private void Awake()
     {
         Instance = this; 

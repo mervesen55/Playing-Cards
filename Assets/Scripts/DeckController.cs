@@ -46,9 +46,11 @@ public class DeckController : MonoBehaviour
         else if (isInitialCard)
         {
             GameManager.Instance.PlayedCards.Add(newCard.transform);
+            newCard.GetComponent<Card>().IsInitial = true;
             if (counter<3) newCard.gameObject.SetActive(false);
             else
             {
+                newCard.GetComponent<Renderer>().sortingOrder = 1;
                 newCard.GetComponent<BoxCollider2D>().enabled = false;
                 newCard.transform.position = GameManager.Instance.PlayingArea.transform.position + Vector3.right * UnityEngine.Random.Range(-0.5f, 0.5f);
                 GameManager.Instance.LastCard = cardName[0];
@@ -63,12 +65,14 @@ public class DeckController : MonoBehaviour
     {
         int randomNumber = UnityEngine.Random.Range(0, cards.Count);
         string dealtCard = Cards[randomNumber];
-        Cards.Remove(dealtCard);
+        cards.Remove(dealtCard);
         return dealtCard;
     }
 
+
+
     public void DealCards()
-    {
+    {      
         string dealtCard;
         if (!GameManager.Instance.RoundSetted)
         {

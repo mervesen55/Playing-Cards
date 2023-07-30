@@ -15,6 +15,7 @@ public class Card : MonoBehaviour
     private bool isJack;
     private bool numberCard;
     private bool played;
+    private bool isInitial;
 
     public char Letter
     {
@@ -32,6 +33,13 @@ public class Card : MonoBehaviour
         set { played = value; }
     }
 
+    public bool IsInitial
+    {
+        get { return isInitial; }
+        set { isInitial = value; }
+
+    }
+
     public bool IsJack
     {
         get { return isJack; }
@@ -45,7 +53,13 @@ public class Card : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (Played || !Player.Instance.isMyTurn) return;
+        if (Played || !Player.Instance.isMyTurn) 
+        {
+            Debug.Log("it's not your turn ");
+            return;
+        }
+        Player.Instance.isMyTurn = false;
+        //Player.Instance.transform.GetComponent<TurnController>().ToggleTurn(false);
         played = true;
         MoveCard(Player.Instance.transform);
     }
@@ -67,13 +81,24 @@ public class Card : MonoBehaviour
             transform.DORotate(Vector3.forward * randomAngle, 0.2f).OnComplete(() =>
             {
                 GameManager.Instance.PlayedCards.Add(transform);
-                //if (GameManager.Instance.LastCard != 0)
+                GameManager.Instance.totalValue += cardValue;
+                if ((letter == GameManager.Instance.LastCard || isJack) && GameManager.Instance.PlayedCards.Count > 1)
                 {
-                    if ((letter == GameManager.Instance.LastCard || isJack) && GameManager.Instance.PlayedCards.Count > 1)
+                    if(player.TryGetComponent<Player>(out Player playerScript))
                     {
-                        GameManager.Instance.Snap(player.position);
+                        playerScript.gainedValue += 10 + GameManager.Instance.totalValue;
+                       
+
                     }
+                    else
+                    {
+                        player.GetComponent<Bot>().GainedValue += 10 + GameManager.Instance.totalValue;
+                    }
+                    GameManager.Instance.totalValue = 0;
+                    GameManager.Instance.Snap(player.position);
                 }
+
+
 
                 GameManager.Instance.LastCard = letter;
                 GameManager.Instance.SetPlayingOrder();
@@ -125,6 +150,8 @@ public class Card : MonoBehaviour
                 default: break;
             }
         }
+
+        GameManager.Instance.totalValue += cardValue;
     }
    
 

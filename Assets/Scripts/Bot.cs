@@ -9,6 +9,9 @@ public class Bot : MonoBehaviour
 
     [HideInInspector] public int WinCount;
     [HideInInspector] public int LostCount;
+    [HideInInspector] public int MyBet;
+
+    [HideInInspector] public int GainedValue;
 
     public GameObject myPointer;
 

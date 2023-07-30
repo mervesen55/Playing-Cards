@@ -6490,9 +6490,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NumberofBots: 1
-  layerOrder: 0
+  layerOrder: 2
   Timer: 0
   TotalBet: 0
+  totalValue: 0
   LastCard: 0
   CurrentCard: 
   RoundSetted: 0

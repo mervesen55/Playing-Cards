@@ -36,17 +36,20 @@ public class TableCreator : MonoBehaviour
     {
         currentBet = minBet + (int)((maxBet - minBet) *(slider.value));
         Player.Instance.myBet = currentBet;
-        currentBetText.text = currentBet.ToString();       
+        currentBetText.text = currentBet.ToString();
+        
     }
 
     public void SetNumberofPeople(int _peopleNumber)
     {
         peopleNumber = _peopleNumber;
+        
     }
 
     public void CreateTable()
     {
         GameManager.Instance.NumberofBots = peopleNumber-1;
+        GameManager.Instance.TotalBet = peopleNumber * currentBet;//create table demese de betin hesaplanmasý için playe aktar to do
         gameObject.SetActive(false);
     }
 

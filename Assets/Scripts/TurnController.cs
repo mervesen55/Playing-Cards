@@ -7,6 +7,8 @@ public class TurnController : MonoBehaviour
 {
     public GameObject myPointer;
 
+    public int myBet;
+
     [SerializeField] private bool isPlayer;
 
     private Bot bot;

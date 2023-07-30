@@ -9,10 +9,12 @@ public class GameManager : MonoBehaviour
 
     public int NumberofBots;
 
-    [HideInInspector] public int layerOrder;
+    public int layerOrder=2;
 
     public int Timer;
     public int TotalBet;
+    public int totalValue;
+
 
     public char LastCard;
     public string CurrentCard;
@@ -93,6 +95,11 @@ public class GameManager : MonoBehaviour
     }
     public void ReDealCards()
     {
+        if (DeckController.Instance.Cards.Count == 0)
+        {   
+            FinishRound();
+            return;
+        }
         DeckController.Instance.DealCards();
         for(int i=1; i < PlayingOrder.Count; i++)
         {
@@ -111,9 +118,35 @@ public class GameManager : MonoBehaviour
         }
         PlayedCards.Clear();
     }
-
-    private void DealInitialCards()
+    private void FinishRound()
     {
-        
+        int maxScore = 0;
+        Transform winner = null;
+        foreach(Transform player in PlayingOrder)
+        {
+            if (player.TryGetComponent<Player>(out Player playerScript))
+            {
+                if (playerScript.gainedValue > maxScore)
+                {
+                    winner = player;
+                    maxScore = playerScript.gainedValue;
+                }
+                Debug.Log("your score" + playerScript.gainedValue);
+            }
+            else
+            {
+                if (player.GetComponent<Bot>().GainedValue > maxScore) 
+                {
+                   
+                    winner = player;
+                    maxScore = playerScript.gainedValue; 
+                }
+                winner.GetComponent<Bot>().MyBet += GameManager.Instance.TotalBet;
+                Debug.Log( player.GetComponent<Bot>().name + "score:  " + player.GetComponent<Bot>().GainedValue) ;
+            }
+        }
+
+        Debug.Log("Round finished! " + winner + " winned! with " + maxScore + " point");
     }
+
 }
