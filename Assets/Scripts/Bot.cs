@@ -2,21 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Bot : MonoBehaviour
 {
-    public static Player Instance;
-
-    public Transform[] cardPoints;
-
     [HideInInspector]
     public bool isMyTurn;
 
+    [HideInInspector]
     public int WinCount;
+    [HideInInspector]
     public int LostCount;
-
-
-    private void Awake()
-    {
-        Instance = this; 
-    }
 }

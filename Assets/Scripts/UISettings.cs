@@ -27,9 +27,6 @@ public class UISettings : MonoBehaviour
         }
     }
 
-    public void RestartGame()
-    {
-
-    }
+ 
 
 }

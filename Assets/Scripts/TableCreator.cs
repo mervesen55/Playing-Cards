@@ -16,7 +16,9 @@ public class TableCreator : MonoBehaviour
 
     [SerializeField] private Slider slider;
 
-    private int peopleNumber;
+    [SerializeField]
+    private int peopleNumber=2;
+
 
     private void Start()
     {
@@ -37,7 +39,7 @@ public class TableCreator : MonoBehaviour
 
     public void CreateTable()
     {
-        GameManager.Instance.NumberofBots = peopleNumber;
+        GameManager.Instance.NumberofBots = peopleNumber-1;
         gameObject.SetActive(false);
     }
 

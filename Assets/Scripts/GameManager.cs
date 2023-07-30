@@ -6,14 +6,22 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    [HideInInspector] public int NumberofBots;
+     public int NumberofBots;
     [HideInInspector] public int layerOrder;
 
+    public int Timer;
+    public int TotalBet;
 
+    public string LastCard;
+    public string CurrentCard;
+
+    public List<Transform> Players = new List<Transform>();
 
     public GameObject PlayingArea;
     public GameObject PlayerPoint;
 
+    [SerializeField]
+    private List<Transform> PlayingOrder = new List<Transform>();
 
 
     private void Awake()
@@ -24,5 +32,23 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
 
+    }
+
+    [ContextMenu("Set Order")]
+    public void SetPlayingOrder()
+    {
+        PlayingOrder.Clear();
+        if(NumberofBots==1)
+        {
+            PlayingOrder.Add(Players[0]);            
+            PlayingOrder.Add(Players[2]);            
+        }
+        else
+        {
+            foreach(Transform _player in Players)
+            { 
+                PlayingOrder.Add(_player);
+            }
+        }
     }
 }
