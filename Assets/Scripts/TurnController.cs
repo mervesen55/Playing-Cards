@@ -40,7 +40,8 @@ public class TurnController : MonoBehaviour
             if (myBet < minBet) myBet = minBet;
             if(BetText)BetText.text = myBet.ToString();
             SetProfileInfos();
-            SetPrefs();
+            //SetPrefs();
+            PlayerPrefs.SetInt("Bet" + ID, myBet);
         }
     }
     public int Score
@@ -50,7 +51,8 @@ public class TurnController : MonoBehaviour
         {
             score  = value;
             SetProfileInfos();
-            SetPrefs(); 
+            PlayerPrefs.SetInt("Score" + ID, score);
+            //SetPrefs(); 
         }
     }
     private void Awake()
@@ -72,7 +74,8 @@ public class TurnController : MonoBehaviour
     }
     private void Start()
     {
-        if (!isPlayer && !GameManager.Instance.ContiuneRound)
+        bool continueRound = PlayerPrefs.GetInt("keepPlaying") == 1;
+        if (!isPlayer && !continueRound)
         {
             DeletePrefs();
         }

@@ -56,11 +56,11 @@ public class UISettings : MonoBehaviour
     }
     public void SetProfile()
     {
+       
         TurnController turnController = Player.Instance.GetComponent<TurnController>();
         playerBetText.text = turnController.MyBet.ToString();
         playerLostText.text = turnController.LostCount.ToString();
         playerWinText.text = turnController.WinCount.ToString();
-
 
     }
 

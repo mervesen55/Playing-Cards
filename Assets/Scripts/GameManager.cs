@@ -157,22 +157,22 @@ public class GameManager : MonoBehaviour
     public void KeepPlaying()
     {
         PlayerPrefs.SetInt("botNumber", NumberofBots);
-        SceneManager.LoadScene(0);
-        ContiuneRound=true;
+        ContiuneRound = true;
         PlayerPrefs.SetInt("keepPlaying", 1);
+        SceneManager.LoadScene(0);
+  
         //Restart();
         //Invoke(nameof(Restart), 1);
     }
 
     private void Restart()
     {
-        
-        Debug.Log(1);
+
         UISettings.instance.TogglePanels(tableOptionsIcon);
         StartGame();
         ContiuneRound = false;
         PlayerPrefs.SetInt("keepPlaying", 0);
-        Debug.Log(2);
+
     }
 
     private void FinishRound()
@@ -210,7 +210,7 @@ public class GameManager : MonoBehaviour
             if (player != winner) player.GetComponent<TurnController>().SetWinLost(false);
             else player.GetComponent<TurnController>().SetWinLost(true);
         }
-        if (maxScore >= 101)
+        if (maxScore >= 51)
         {
             continueButton.SetActive(false);
         }
