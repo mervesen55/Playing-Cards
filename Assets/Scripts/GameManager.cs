@@ -165,7 +165,12 @@ public class GameManager : MonoBehaviour
 
         UISettings.instance.SetSaloonStats();
         winner.GetComponent<TurnController>().MyBet += TotalBet;
-        UISettings.instance.SetScoreTableText(winner, maxScore);
+        foreach (Transform player in PlayingOrder)
+        {
+            if (player != winner) player.GetComponent<TurnController>().SetWinLost(false);
+            else player.GetComponent<TurnController>().SetWinLost(true);
+        }
+            UISettings.instance.SetScoreTableText(winner, maxScore);
     }
 
 

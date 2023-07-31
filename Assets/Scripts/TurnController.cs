@@ -31,15 +31,7 @@ public class TurnController : MonoBehaviour
     {
         get { return myBet; }
         set
-        {
-            if (value < 0)
-            {
-                LostCount++;
-            }
-            else
-            {
-                WinCount ++;
-            }          
+        {      
             myBet = value;
             if (myBet < minBet) myBet = minBet;
             if(BetText)BetText.text = myBet.ToString();
@@ -67,6 +59,13 @@ public class TurnController : MonoBehaviour
         else bot.isMyTurn = _isMyTurn;
         myPointer.SetActive(_isMyTurn);
         if(!isPlayer && _isMyTurn) bot.Decide();
+    }
+
+    public void SetWinLost(bool win)
+    {
+        if (win) WinCount++;
+        else LostCount++;
+        SetPrefs();
     }
     private void SetPrefs()
     {
