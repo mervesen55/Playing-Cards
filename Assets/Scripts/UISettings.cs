@@ -44,7 +44,7 @@ public class UISettings : MonoBehaviour
     public void SetScoreTableText(Transform winner, int score)
     {
         scoreInfoPanel.SetActive(true);
-        ScoreTableText.text =  "Round is finished, " + winner + " winned! with " + score + " points!";
+        ScoreTableText.text =  winner.name + " winned with " + score + " points!";
     }
 
     public void SetSaloonStats()

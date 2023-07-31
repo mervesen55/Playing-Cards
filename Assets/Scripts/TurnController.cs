@@ -12,7 +12,7 @@ public class TurnController : MonoBehaviour
     public int LostCount;
     public int WinCount;
 
-    [HideInInspector] public int Score;//score
+    /*[HideInInspector]*/ public int Score;//score
     public int totalGainedCardNumber;
 
     [SerializeField] private bool isPlayer;
