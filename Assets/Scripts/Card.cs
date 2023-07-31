@@ -159,7 +159,7 @@ public class Card : MonoBehaviour
             }
         }
 
-        GameManager.Instance.totalValue += cardValue;
+        //GameManager.Instance.totalValue += cardValue;
     }
    
 

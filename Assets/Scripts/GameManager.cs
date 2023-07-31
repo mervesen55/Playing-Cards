@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     public bool RoundSetted;
     public bool initialCardsGained;
+    public bool ContiuneRound;
 
     public List<Transform> Players = new List<Transform>();
     public List<Transform> PlayedCards = new List<Transform>();
@@ -29,9 +30,12 @@ public class GameManager : MonoBehaviour
 
     public GameObject PlayingArea;
     public GameObject PlayerPoint;
+    public GameObject PlayerCanvas;
     public GameObject roomsPanel;
     public GameObject optionsPanel;
     public GameObject fakeInitialCards;
+    public GameObject continueButton;//101 puanda kapat to do
+    public GameObject tableOptionsIcon;
  
 
     private int turnCounter;
@@ -42,9 +46,24 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        if (PlayerPrefs.HasKey("keepPlaying"))
+        {
+            ContiuneRound = PlayerPrefs.GetInt("keepPlaying") == 1;
+        }
+        else PlayerPrefs.SetInt("keepPlaying", 0);
+        if (ContiuneRound)
+        {
+            NumberofBots = PlayerPrefs.GetInt("botNumber");
+            Invoke(nameof(Restart), 0.3f);
+        }
+    }
     //calling by play now button
     public void StartGame()
-    {        
+    {
+        if(ContiuneRound)CardGenerator.instance.GenerateCards();
+        PlayerCanvas.SetActive(true);
         SetPlayersByOrder();
         TotalBet = (NumberofBots + 1) * chosenBet;
         roomsPanel.SetActive(false);
@@ -117,9 +136,9 @@ public class GameManager : MonoBehaviour
     [ContextMenu("Reset")]
     public void ResetGame()
     {
+        ContiuneRound = false;
         SceneManager.LoadScene(0);
     }
-
     public void Snap(Vector2 callerPos)
     {
         if (fakeInitialCards.activeSelf)
@@ -134,6 +153,28 @@ public class GameManager : MonoBehaviour
         }
         PlayedCards.Clear();
     }
+
+    public void KeepPlaying()
+    {
+        PlayerPrefs.SetInt("botNumber", NumberofBots);
+        SceneManager.LoadScene(0);
+        ContiuneRound=true;
+        PlayerPrefs.SetInt("keepPlaying", 1);
+        //Restart();
+        //Invoke(nameof(Restart), 1);
+    }
+
+    private void Restart()
+    {
+        
+        Debug.Log(1);
+        UISettings.instance.TogglePanels(tableOptionsIcon);
+        StartGame();
+        ContiuneRound = false;
+        PlayerPrefs.SetInt("keepPlaying", 0);
+        Debug.Log(2);
+    }
+
     private void FinishRound()
     {
         int maxScore = 0;
@@ -169,7 +210,13 @@ public class GameManager : MonoBehaviour
             if (player != winner) player.GetComponent<TurnController>().SetWinLost(false);
             else player.GetComponent<TurnController>().SetWinLost(true);
         }
-            UISettings.instance.SetScoreTableText(winner, maxScore);
+        if (maxScore >= 101)
+        {
+            continueButton.SetActive(false);
+        }
+
+        UISettings.instance.SetScoreTableText(winner, maxScore);
+       
     }
 
 

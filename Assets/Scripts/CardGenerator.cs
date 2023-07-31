@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class CardGenerator : MonoBehaviour
 {
+    public static CardGenerator instance;
+
     [SerializeField]
     private DeckController deckController;
 
     private List<string> CardTypes = new List<string> {"Clubs", "Diamonds", "Hearts", "Spades"};
     private List<string> CardSubTypes = new List<string> {"Ace", "Numbered", "Jack", "Queen", "King"};
 
+
+    private void Awake()
+    {
+        instance = this;
+    }
     private void Start()
     {
-        GenerateCards();
+        if(!GameManager.Instance.ContiuneRound)
+            GenerateCards();
     }
 
     //need for loops in order to combinate card types and card subtypes such as "ace of clubs" or "queen of diamonds"
