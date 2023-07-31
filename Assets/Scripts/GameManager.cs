@@ -64,8 +64,17 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         if(ContiuneRound)CardGenerator.instance.GenerateCards();
+      
         PlayerCanvas.SetActive(true);
         SetPlayersByOrder();
+        if (!ContiuneRound)
+        {
+            for(int i =1; i < PlayingOrder.Count ;i++)
+            {
+                PlayingOrder[i].GetComponent<TurnController>().DeletePrefs();
+            }
+            PlayerPrefs.SetInt("Score" + 0, 0);
+        }
         TotalBet = (NumberofBots + 1) * chosenBet;
         roomsPanel.SetActive(false);
         optionsPanel.SetActive(true);
