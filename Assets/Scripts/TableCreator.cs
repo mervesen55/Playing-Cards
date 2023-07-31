@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class TableCreator : MonoBehaviour
 {
-    public static TableCreator Instance;
-
     [SerializeField] private TMP_Text minBetText;
     [SerializeField] private TMP_Text maxBetText;
     [SerializeField] private TMP_Text currentBetText;
@@ -28,14 +26,19 @@ public class TableCreator : MonoBehaviour
         set { peopleNumber = value; }
     }
 
-    private void Awake()
-    {
-        Instance = this;
-    }
+   
     public void SetCurrentText()
     {
-        currentBet = minBet + (int)((maxBet - minBet) *(slider.value));
-        Player.Instance.myBet = currentBet;
+        //currentBet = minBet + (int)((maxBet - minBet) *(slider.value));
+        slider.minValue = minBet;
+        slider.maxValue = maxBet;
+        if(Player.Instance.GetComponent<TurnController>().MyBet < slider.value)
+        {
+            slider.value = Player.Instance.GetComponent<TurnController>().MyBet;
+        }
+        currentBet = (int)slider.value;
+
+        GameManager.Instance.chosenBet = currentBet;
         currentBetText.text = currentBet.ToString();
         
     }
@@ -49,7 +52,7 @@ public class TableCreator : MonoBehaviour
     public void CreateTable()
     {
         GameManager.Instance.NumberofBots = peopleNumber-1;
-        GameManager.Instance.TotalBet = peopleNumber * currentBet;//create table demese de betin hesaplanmasý için playe aktar to do
+        //GameManager.Instance.TotalBet = peopleNumber * currentBet;//create table demese de betin hesaplanmasý için playe aktar to do
         gameObject.SetActive(false);
     }
 

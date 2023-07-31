@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -11,13 +12,6 @@ public class Player : MonoBehaviour
     public GameObject myPointer;
 
     [HideInInspector] public bool isMyTurn;
-
-    public int WinCount;
-    public int LostCount;
-    public int myBet;
-
-    public int gainedValue;
-    //snap olunca 10 puan ver to do
 
     private void Awake()
     {

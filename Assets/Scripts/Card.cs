@@ -82,18 +82,26 @@ public class Card : MonoBehaviour
             {
                 GameManager.Instance.PlayedCards.Add(transform);
                 GameManager.Instance.totalValue += cardValue;
+                //snap control
                 if ((letter == GameManager.Instance.LastCard || isJack) && GameManager.Instance.PlayedCards.Count > 1)
                 {
-                    if(player.TryGetComponent<Player>(out Player playerScript))
+                    //take points
+                    player.GetComponent<TurnController>().Score += GameManager.Instance.totalValue;
+                    //super snap control
+                    if(GameManager.Instance.PlayedCards.Count == 2 && (!isJack == (GameManager.Instance.LastCard != "J".ToCharArray()[0])))
                     {
-                        playerScript.gainedValue += 10 + GameManager.Instance.totalValue;
-                       
-
+                        //take 10 more points
+                        player.GetComponent<TurnController>().Score += 10;
+                     
                     }
-                    else
+                    int initialCardCount = 0;
+                    if (!GameManager.Instance.initialCardsGained)
                     {
-                        player.GetComponent<Bot>().GainedValue += 10 + GameManager.Instance.totalValue;
+                        initialCardCount = 3;
+                        GameManager.Instance.initialCardsGained = true;
                     }
+                    //add gained card numbers
+                    player.GetComponent<TurnController>().totalGainedCardNumber += GameManager.Instance.PlayedCards.Count + initialCardCount;
                     GameManager.Instance.totalValue = 0;
                     GameManager.Instance.Snap(player.position);
                 }

@@ -7,19 +7,12 @@ public class Bot : MonoBehaviour
 {
     [HideInInspector] public bool isMyTurn;
 
-    [HideInInspector] public int WinCount;
-    [HideInInspector] public int LostCount;
-    [HideInInspector] public int MyBet;
-
-    [HideInInspector] public int GainedValue;
-
     public GameObject myPointer;
 
     public bool lastTurn;
 
     public List<Transform> myCardPoints = new List<Transform>();
     public List<Transform> cardsInMyHand = new List<Transform>();
-
     private List<Transform> temporaryList = new List<Transform>();
 
     private Transform chosenCard;

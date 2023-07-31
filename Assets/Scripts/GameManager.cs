@@ -1,37 +1,38 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
     public int NumberofBots;
-
+    public int chosenBet;
     public int layerOrder=2;
-
     public int Timer;
     public int TotalBet;
     public int totalValue;
 
-
     public char LastCard;
+
     public string CurrentCard;
 
     public bool RoundSetted;
+    public bool initialCardsGained;
 
     public List<Transform> Players = new List<Transform>();
     public List<Transform> PlayedCards = new List<Transform>();
+    public List<Transform> PlayingOrder = new List<Transform>();
 
     public GameObject PlayingArea;
     public GameObject PlayerPoint;
     public GameObject roomsPanel;
     public GameObject optionsPanel;
     public GameObject fakeInitialCards;
-
-
-    public List<Transform> PlayingOrder = new List<Transform>();
+ 
 
     private int turnCounter;
 
@@ -43,11 +44,17 @@ public class GameManager : MonoBehaviour
 
     //calling by play now button
     public void StartGame()
-    {
+    {        
         SetPlayersByOrder();
+        TotalBet = (NumberofBots + 1) * chosenBet;
         roomsPanel.SetActive(false);
         optionsPanel.SetActive(true);
         DeckController.Instance.DealCards();
+        //take money from everyone
+        foreach (Transform player in PlayingOrder)
+        {
+            player.GetComponent<TurnController>().MyBet -= chosenBet;
+        }
 
         foreach (Transform _player in PlayingOrder)
         {
@@ -105,11 +112,21 @@ public class GameManager : MonoBehaviour
         {
             PlayingOrder[i].GetComponent<Bot>().ResetCardPoints();
         }
-    }  
+    }
+
+    [ContextMenu("Reset")]
+    public void ResetGame()
+    {
+        SceneManager.LoadScene(0);
+        Debug.Log("deneme");
+    }
 
     public void Snap(Vector2 callerPos)
     {
-        if(fakeInitialCards.activeSelf) fakeInitialCards.SetActive(false);
+        if (fakeInitialCards.activeSelf)
+        {
+            fakeInitialCards.SetActive(false);
+        }
         foreach(Transform playedCard in PlayedCards)
         {
             Vector2 target = callerPos;
@@ -121,32 +138,36 @@ public class GameManager : MonoBehaviour
     private void FinishRound()
     {
         int maxScore = 0;
+        int maxCardNumber = 0;
         Transform winner = null;
+        Transform playerWithMaxCards = null;
         foreach(Transform player in PlayingOrder)
         {
-            if (player.TryGetComponent<Player>(out Player playerScript))
+            TurnController turnController = player.GetComponent<TurnController>();            
+            if(turnController.totalGainedCardNumber > maxCardNumber)
             {
-                if (playerScript.gainedValue > maxScore)
-                {
-                    winner = player;
-                    maxScore = playerScript.gainedValue;
-                }
-                Debug.Log("your score" + playerScript.gainedValue);
-            }
-            else
-            {
-                if (player.GetComponent<Bot>().GainedValue > maxScore) 
-                {
-                   
-                    winner = player;
-                    maxScore = playerScript.gainedValue; 
-                }
-                winner.GetComponent<Bot>().MyBet += GameManager.Instance.TotalBet;
-                Debug.Log( player.GetComponent<Bot>().name + "score:  " + player.GetComponent<Bot>().GainedValue) ;
+                maxCardNumber = turnController.totalGainedCardNumber;
+                playerWithMaxCards = player;
             }
         }
+        //give more 3 points to player with max card number
+        playerWithMaxCards.GetComponent<TurnController>().Score += 3;
+        foreach (Transform player in PlayingOrder)
+        {
+            TurnController turnController = player.GetComponent<TurnController>();
+            if (turnController.Score > maxScore)
+            {
+                winner = player;
+                maxScore = turnController.Score;
+            }
 
-        Debug.Log("Round finished! " + winner + " winned! with " + maxScore + " point");
+        }
+
+        UISettings.instance.SetSaloonStats();
+        winner.GetComponent<TurnController>().MyBet += TotalBet;
+        UISettings.instance.SetScoreTableText(winner, maxScore);
     }
+
+
 
 }
