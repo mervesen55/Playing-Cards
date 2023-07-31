@@ -11093,7 +11093,7 @@ MonoBehaviour:
   roomsPanel: {fileID: 1506767229}
   optionsPanel: {fileID: 1064908347}
   fakeInitialCards: {fileID: 2142552633}
-  continueButton: {fileID: 0}
+  continueButton: {fileID: 580089423}
   tableOptionsIcon: {fileID: 1064908347}
   saloon: {fileID: 985871154}
 --- !u!4 &1315620603
