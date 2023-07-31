@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using Unity.VisualScripting.ReorderableList.Element_Adder_Menu;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class DeckController : MonoBehaviour
 
     [SerializeField]
     private List<string> cards = new List<string>();
+
+    [SerializeField] private TMP_Text remainedCardNoText;
 
     private int cardPointsIndex;
     private int botNo;
@@ -55,11 +58,12 @@ public class DeckController : MonoBehaviour
                 newCard.transform.position = GameManager.Instance.PlayingArea.transform.position + Vector3.right * UnityEngine.Random.Range(-0.5f, 0.5f);
                 GameManager.Instance.LastCard = cardName[0];
                 GameManager.Instance.fakeInitialCards.SetActive(true);
-            }                
-            
-           
-            counter++;
+            }
+
+  
+            counter++;//
         }
+        remainedCardNoText.text = cards.Count.ToString();
     }
     private string ChoseCard()
     {

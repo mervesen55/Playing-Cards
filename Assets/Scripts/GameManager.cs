@@ -118,7 +118,6 @@ public class GameManager : MonoBehaviour
     public void ResetGame()
     {
         SceneManager.LoadScene(0);
-        Debug.Log("deneme");
     }
 
     public void Snap(Vector2 callerPos)
