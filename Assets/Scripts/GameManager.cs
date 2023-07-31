@@ -34,8 +34,9 @@ public class GameManager : MonoBehaviour
     public GameObject roomsPanel;
     public GameObject optionsPanel;
     public GameObject fakeInitialCards;
-    public GameObject continueButton;//101 puanda kapat to do
+    public GameObject continueButton;
     public GameObject tableOptionsIcon;
+    public GameObject saloon;
  
 
     private int turnCounter;
@@ -56,7 +57,7 @@ public class GameManager : MonoBehaviour
         if (ContiuneRound)
         {
             NumberofBots = PlayerPrefs.GetInt("botNumber");
-            Invoke(nameof(Restart), 0.3f);
+            Invoke(nameof(Restart), 0.1f);
         }
     }
     //calling by play now button
@@ -160,19 +161,14 @@ public class GameManager : MonoBehaviour
         ContiuneRound = true;
         PlayerPrefs.SetInt("keepPlaying", 1);
         SceneManager.LoadScene(0);
-  
-        //Restart();
-        //Invoke(nameof(Restart), 1);
     }
 
     private void Restart()
     {
-
         UISettings.instance.TogglePanels(tableOptionsIcon);
         StartGame();
         ContiuneRound = false;
         PlayerPrefs.SetInt("keepPlaying", 0);
-
     }
 
     private void FinishRound()
@@ -212,13 +208,18 @@ public class GameManager : MonoBehaviour
         }
         if (maxScore >= 51)
         {
+            ContiuneRound = false;
+            PlayerPrefs.SetInt("keepPlaying", 0);
             continueButton.SetActive(false);
         }
-
+        ToggleSaloon("0");
         UISettings.instance.SetScoreTableText(winner, maxScore);
        
     }
 
-
+    public void ToggleSaloon(string state)
+    {
+        saloon.SetActive(state=="1");
+    }
 
 }
