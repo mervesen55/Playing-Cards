@@ -62,6 +62,7 @@ public class TurnController : MonoBehaviour
         if (PlayerPrefs.HasKey("PlayersWinCount" + ID))
         {
             myBet = PlayerPrefs.GetInt("Bet" + ID);
+            
             WinCount = PlayerPrefs.GetInt("PlayersWinCount" + ID);
             LostCount = PlayerPrefs.GetInt("PlayersLostCount" + ID);
             score = PlayerPrefs.GetInt("Score" + ID);
@@ -74,6 +75,7 @@ public class TurnController : MonoBehaviour
     }
     private void Start()
     {
+        if(isPlayer)GameManager.Instance.chosenBet = myBet;
         bool continueRound = PlayerPrefs.GetInt("keepPlaying") == 1;
         if (!isPlayer && !continueRound)
         {
